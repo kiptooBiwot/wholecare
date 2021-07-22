@@ -1,0 +1,29 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Whole Care Solutions Web Application",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "jest --config ./jest.config.json",
+    "test:watch": "npm run test -- --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "@kiptoobiwot"
+  },
+  "author": "Kiptoo Biwot",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "mongoose": "^5.13.3",
+    "multer": "^1.4.2",
+    "redis": "^3.1.2"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}

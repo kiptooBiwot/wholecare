@@ -1,5 +1,5 @@
 const express = require("express");
-// const morgan = require("morgan");
+const morgan = require("morgan");
 const createError = require("http-errors");
 require("dotenv").config();
 require('./helpers/mongodb.init')
@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 
 app.use('/api/v1/users', userRoutes)
 

@@ -6,7 +6,8 @@ const authSchema = Joi.object({
     role: Joi.string().lowercase(),
     firstName: Joi.string(),
     middleName: Joi.string(),
-    surname: Joi.string()
+    surname: Joi.string(),
+    acceptTerms: Joi.boolean()
 })
 
 

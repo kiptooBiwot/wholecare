@@ -4,7 +4,6 @@ const userSchema = new Schema(
   {
     firstName: {
       type: String,
-      required: true,
       trim: true,
     },
     middleName: {
@@ -13,11 +12,11 @@ const userSchema = new Schema(
     },
     surname: {
       type: String,
-      required: true,
       trim: true,
     },
     email: {
       type: String,
+      required: true,
       unique: true,
       trim: true,
       index: true,
@@ -45,6 +44,10 @@ const userSchema = new Schema(
     contact_number: {
       type: String,
       trim: true
+    },
+    acceptTerms: {
+      type: Boolean,
+      required: true
     }
   },
   { timestamps: true }

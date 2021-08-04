@@ -18,7 +18,7 @@ module.exports.userControllers = {
     try {
       const allUsers = await User.find({});
 
-      if (users.length < 1)
+      if (allUsers.length < 1)
         throw createError.NotFound("No users registered yet.");
 
       res.status(200).json({
@@ -71,7 +71,7 @@ module.exports.userControllers = {
       const accessToken = await signAccessToken(savedUser);
       const refreshToken = await signRefreshToken(savedUser);
 
-      res.header("x-access-token", accessToken).send({
+      res.header("x-access-token", accessToken).status(201).send({
         message: `Registration successful`,
         token: `Bearer ${accessToken}`,
         refreshToken: `Bearer ${refreshToken}`,

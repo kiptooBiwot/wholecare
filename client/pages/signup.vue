@@ -155,9 +155,9 @@
                 <div class="flex space-x-24 items-center">
                   <label for="terms" class="ml-2 text-xs block text-gray-500">
                     I accept the
-                    <NuxtLink to="/">
+                    <nuxt-link to="/">
                       <span class="cursor-pointer text-xs font-bold text-blue-600 hover:text-blue-800">Terms & Conditions</span>
-                    </NuxtLink>
+                    </nuxt-link>
                   </label>
                 </div>
               </div>
@@ -178,7 +178,7 @@
                 </p>
               </div>
               <div>
-                <p>Already have an account? <span class="cursor-pointer text-blue-600 hover:text-blue-800"><NuxtLink to="/">Sign In</NuxtLink></span></p>
+                <p>Already have an account? <span class="cursor-pointer text-blue-600 hover:text-blue-800"><nuxt-link to="/">Sign In</nuxt-link></span></p>
               </div>
             </form>
           </div>
@@ -204,12 +204,11 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
-import { mapActions } from 'vuex'
+import { } from 'vuex'
 
 export default {
   name: 'RegisterUser',
   mixins: [validationMixin],
-  layout: 'auth',
   async asyncData ({ $axios }) {
     try {
       const response = await $axios.$get('/users')
@@ -232,7 +231,8 @@ export default {
       },
       submitStatus: null,
       feedback: '',
-      alertOpen: false
+      alertOpen: false,
+      hasData: false
     }
   },
   validations: {
@@ -242,11 +242,14 @@ export default {
         email,
         uniqueEmail (val) {
           if (val === '') { return true }
-          console.log(this.users)
           const users = this.users
-          const emailTaken = users.find(user => user.email === val)
-          if (emailTaken) { return false }
-          return true
+          if (users) {
+            const emailTaken = users.find(user => user.email === val)
+            if (emailTaken) { return false }
+            return true
+          } else {
+            return true
+          }
         }
       },
       password: { required, minLength: minLength(6) },
@@ -255,28 +258,65 @@ export default {
     }
   },
   methods: {
+    // ...mapState('auth', ['registeredUser']),
     // ...mapActions('actions', ['registerUser']),
-    ...mapActions({ registerUser: 'auth/registerUser' }),
-    signUp () {
+    // ...mapActions({ registerUser: 'auth/registerUser' }),
+    async signUp () {
       this.$v.$touch()
 
       if (!this.$v.$invalid) {
-        this.submitStatus = 'PENDING'
+        try {
+          const response = await this.$axios.$post('/users',
+            {
+              email: this.user.email,
+              password: this.user.password,
+              acceptTerms: this.user.acceptTerms
+            }
+          )
 
-        this.registerUser(
-          {
-            email: this.user.email,
-            password: this.user.password,
-            acceptTerms: this.user.acceptTerms
-          })
-
-        setTimeout(() => {
-          this.alertOpen = true
-        }, 5000)
-
-        // this.resetForm()
-        // this.$router.push('/success')
+          if (response) {
+            setTimeout(() => {
+              this.alertOpen = true
+            }, 5000)
+            console.log(`RESPONSE FROM AXIOS: ${response.user._id}`)
+            this.$router.push(`/basic-info/${response.user._id}`)
+          }
+        } catch (error) {
+          return error.message
+        }
       }
+
+      // try {
+      //   if (!this.$v.$invalid) {
+      //     this.submitStatus = 'PENDING'
+
+      //     await this.registerUser(
+      //       {
+      //         email: this.user.email,
+      //         password: this.user.password,
+      //         acceptTerms: this.user.acceptTerms
+      //       })
+      //   }
+      //   await setTimeout(() => {
+      //     this.alertOpen = true
+      //   }, 5000)
+
+      //   await this.$store.dispatch('registeredUser')
+      //   // this.$store.state('registeredUser')
+      //   console.log(`REGISTERED USER: ${this.registeredUser}`)
+      //   // this.resetForm()
+      //   this.$router.push(`/basic-info/${this.registeredUser._id}`)
+      // } catch (error) {
+      //   console.log(error)
+      //   return error
+      // }
+    },
+    fetchRegisteredUser () {
+      const registeredUser = this.$store.auth.registeredUser
+
+      console.log(`REGISTERED USER: ${registeredUser}`)
+      // this.resetForm()
+      // this.$router.push(`/basic-info/${this.registeredUser._id}`)
     },
     closeAlert () {
       this.alertOpen = false

@@ -65,16 +65,19 @@ module.exports.userControllers = {
         password: hashedPassword,
       });
 
-      const savedUser = await newUser.save();
+      const user = await newUser.save();
 
       // Generate a token and refresh token
-      const accessToken = await signAccessToken(savedUser);
-      const refreshToken = await signRefreshToken(savedUser);
+      const accessToken = await signAccessToken(user);
+      const refreshToken = await signRefreshToken(user);
 
-      res.header("x-access-token", accessToken).status(201).send({
+      console.log(user)
+
+      res.header("x-access-token", accessToken).status(201).json({
+        user,
         message: `Registration successful`,
-        token: `Bearer ${accessToken}`,
-        refreshToken: `Bearer ${refreshToken}`,
+        // token: `Bearer ${accessToken}`,
+        // refreshToken: `Bearer ${refreshToken}`
       });
     } catch (error) {
       next(error);

@@ -18,13 +18,14 @@
     [type='tel'],
     [type='time'],
     [type='week'],
+    [type='file'],
     [multiple],
     textarea,
     select {
-        @apply w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500;
+        @apply w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm text-gray-500;
     }
     .body {
-        @apply text-sm text-gray-500;
+        @apply antialiased text-sm text-gray-500;
     }
 }
 

@@ -22,6 +22,9 @@ const userSchema = new Schema(
       index: true,
       lowercase: true,
     },
+    dob: {
+      type: Date
+    },
     password: {
       type: String,
       trim: true,
@@ -41,13 +44,37 @@ const userSchema = new Schema(
       type: Boolean,
       default: false
     },
-    contact_number: {
+    mobile_number: {
+      type: String,
+      trim: true
+    },
+    work_number: {
+      type: String,
+      trim: true
+    },
+    home_number: {
+      type: String,
+      trim: true
+    },
+    bio: {
       type: String,
       trim: true
     },
     acceptTerms: {
       type: Boolean,
       required: true
+    },
+    title: {
+      type: String,
+      trim: true
+    },
+    address: {
+      type: String,
+      trim: true
+    },
+    isOnline: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

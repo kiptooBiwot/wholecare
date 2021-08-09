@@ -208,13 +208,14 @@
             </div>
           </div>
           <div>
+            {{ $route.params.id }}
             <hr class="text-gray-100 my-3">
             <div class="flex gap-20 justify-between">
               <button class="btn-primary bg-transparent border-blue-600 text-gray-600 hover:bg-blue-100 hover:text-gray-800">
                 Back
               </button>
-              <button class="btn-primary bg-green-700 hover:bg-green-600">
-                Next
+              <button class="btn-primary bg-green-700 hover:bg-green-600" @click.prevent="saveUserInfo">
+                Save
               </button>
             </div>
           </div>
@@ -227,7 +228,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, numeric, helpers } from 'vuelidate/lib/validators'
-import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 const alpha = helpers.regex('alpha', /^[a-zA-Z_ ]*$/i)
 
 export default {
@@ -250,7 +251,7 @@ export default {
     }
   }),
   computed: {
-    ...mapState('auth', ['user'])
+
   },
   validations: {
     basicInfo: {
@@ -283,17 +284,41 @@ export default {
     }
   },
   methods: {
-    updateUserInfo () {
-      try {
-        this.$store.dispatch('auth/updateUserInfo', {
-          id: this.$route.params.id,
-          data: this.basicInfo
-        })
-      } catch (error) {
-        console.log(error)
-        return error
+    ...mapActions({ updateUserInfo: 'auth/updateUserInfo' }),
+    saveUserInfo () {
+      if (!this.$v.$invalid) {
+        try {
+          this.updateUserInfo({
+            firstName: this.basicInfo.firstName,
+            middleName: this.basicInfo.middleName,
+            surname: this.basicInfo.surname,
+            title: this.basicInfo.title,
+            dob: this.basicInfo.dob,
+            address: this.basicInfo.address,
+            gender: this.basicInfo.gender,
+            mobileNumber: this.basicInfo.mobileNumber,
+            homeNumber: this.basicInfo.homeNumber,
+            workNumber: this.basicInfo.workNumber,
+            profilePic: this.basicInfo.profilePic,
+            bio: this.basicInfo.bio
+          }, this.$route.params.id)
+        } catch (error) {
+          console.log(error)
+          return error
+        }
       }
     }
+    // updateUserInfo () {
+    //   try {
+    //     this.$store.dispatch('auth/updateUserInfo', {
+    //       id: this.$route.params.id,
+    //       data: this.basicInfo
+    //     })
+    //   } catch (error) {
+    //     console.log(error)
+    //     return error
+    //   }
+    // }
   }
 }
 </script>

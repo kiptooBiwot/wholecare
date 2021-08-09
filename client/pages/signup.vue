@@ -204,7 +204,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
-import { } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'RegisterUser',
@@ -258,65 +258,24 @@ export default {
     }
   },
   methods: {
-    // ...mapState('auth', ['registeredUser']),
-    // ...mapActions('actions', ['registerUser']),
-    // ...mapActions({ registerUser: 'auth/registerUser' }),
+    ...mapActions({ registerUser: 'auth/registerUser' }),
     async signUp () {
       this.$v.$touch()
 
       if (!this.$v.$invalid) {
         try {
-          const response = await this.$axios.$post('/users',
+          await this.registerUser(
             {
               email: this.user.email,
               password: this.user.password,
               acceptTerms: this.user.acceptTerms
             }
           )
-
-          if (response) {
-            setTimeout(() => {
-              this.alertOpen = true
-            }, 5000)
-            console.log(`RESPONSE FROM AXIOS: ${response.user._id}`)
-            this.$router.push(`/basic-info/${response.user._id}`)
-          }
+          this.$router.push('/basic-info')
         } catch (error) {
           return error.message
         }
       }
-
-      // try {
-      //   if (!this.$v.$invalid) {
-      //     this.submitStatus = 'PENDING'
-
-      //     await this.registerUser(
-      //       {
-      //         email: this.user.email,
-      //         password: this.user.password,
-      //         acceptTerms: this.user.acceptTerms
-      //       })
-      //   }
-      //   await setTimeout(() => {
-      //     this.alertOpen = true
-      //   }, 5000)
-
-      //   await this.$store.dispatch('registeredUser')
-      //   // this.$store.state('registeredUser')
-      //   console.log(`REGISTERED USER: ${this.registeredUser}`)
-      //   // this.resetForm()
-      //   this.$router.push(`/basic-info/${this.registeredUser._id}`)
-      // } catch (error) {
-      //   console.log(error)
-      //   return error
-      // }
-    },
-    fetchRegisteredUser () {
-      const registeredUser = this.$store.auth.registeredUser
-
-      console.log(`REGISTERED USER: ${registeredUser}`)
-      // this.resetForm()
-      // this.$router.push(`/basic-info/${this.registeredUser._id}`)
     },
     closeAlert () {
       this.alertOpen = false

@@ -1,7 +1,7 @@
 export const state = () => ({
   users: [],
   user: [],
-  registeredUser: []
+  registeredUser: null
 })
 
 export const getters = {}
@@ -30,11 +30,11 @@ export const actions = {
           //     'multipart/form-data boundary=<calculated when request is sent>'
           // }
         })
-
       if (response.status === 201) {
         // dispatch('getUser', response._id)
-        console.log(response.data.user)
-        commit('REGISTERED_USER', response.data.user)
+        // await console.log(`response.data ${response.data.message}`)
+        commit('REGISTERED_USER', response.data)
+        console.log(response.data.message)
       }
     } catch (err) {
       return err
@@ -42,16 +42,21 @@ export const actions = {
   },
 
   // Update Basic information
-  async updateUserInfo ({ dispatch }, id, payload) {
+  async updateUserInfo ({ dispatch, state }, payload) {
     try {
-      const response = await this.$axios.post('/users/:id', payload,
+      const userId = state.registeredUser.user._id
+      console.log(payload)
+      console.log(userId)
+      const response = await this.$axios.post(`/users/${userId}`, payload,
         {
           headers: {
             'Content-Type': 'multipart/form-data boundary=<calculated when request is sent>'
           }
         })
       if (response === 201) {
+        // TODO: ADD ALERTS SHORTLY
         dispatch()
+        console.log('USER Updated!')
       }
     } catch (err) {
       console.error(err)

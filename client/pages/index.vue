@@ -17,9 +17,9 @@
               <label for="email" class="block text-sm font-medium text-gray-500">Email</label>
               <input
                 id="email"
+                v-model="login.email"
                 type="email"
                 name="email"
-                autocomplete
                 required
                 class=""
               >
@@ -28,9 +28,9 @@
               <label for="password" class="block text-sm font-medium text-gray-500">Password</label>
               <input
                 id="password"
+                v-model="login.password"
                 type="password"
                 name="password"
-                autocomplete
                 required
                 class=""
               >
@@ -47,7 +47,7 @@
               </div>
             </div>
             <div>
-              <button class="btn-primary">
+              <button class="btn-primary" @click.prevent="userSignIn">
                 Sign In
               </button>
             </div>
@@ -62,8 +62,63 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  layout: 'auth'
+  layout: 'auth',
+  data () {
+    return {
+      login: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    ...mapActions(['addNotification']),
+    async userSignIn () {
+      try {
+        const response = await this.$auth.loginWith('local',
+          {
+            data: this.login
+          }
+        )
+        console.log(response)
+        if (response.status === 200) {
+          // console.log('inside response')
+          await this.addNotification(
+            {
+              type: 'success',
+              title: 'Success',
+              message: response.data.message
+            }
+          )
+
+          this.$router.push('/dashboard')
+        }
+      } catch (error) {
+        // console.log(error)
+        if (error.response.data.error.status === 403) {
+          await this.addNotification(
+            {
+              type: 'error',
+              title: 'Error',
+              message: error.response.data.error.message
+            }
+          )
+        } else {
+          await this.addNotification(
+            {
+              type: 'error',
+              title: 'Hold On!',
+              message: error.response.data.error.message
+            }
+          )
+        }
+        // return error
+      }
+    }
+  }
 }
 </script>
 

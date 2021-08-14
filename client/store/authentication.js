@@ -31,6 +31,11 @@ export const actions = {
           // }
         })
       if (response.status === 201) {
+        dispatch('addNotification', {
+          type: 'success',
+          title: 'Success',
+          message: response.data.message
+        }, { root: true })
         // dispatch('getUser', response._id)
         // await console.log(`response.data ${response.data.message}`)
         commit('REGISTERED_USER', response.data)
@@ -47,15 +52,21 @@ export const actions = {
       const userId = state.registeredUser.user._id
       console.log(payload)
       console.log(userId)
-      const response = await this.$axios.post(`/users/${userId}`, payload,
+      const response = await this.$axios.patch(`/users/${userId}`, payload,
         {
           headers: {
             'Content-Type': 'multipart/form-data boundary=<calculated when request is sent>'
           }
-        })
-      if (response === 201) {
-        // TODO: ADD ALERTS SHORTLY
-        dispatch()
+        }
+      )
+      if (response.status === 201) {
+        dispatch('addNotification', {
+          type: 'success',
+          title: 'Success',
+          message: `${response.data.message} Sign In to access your account`
+        },
+        { root: true }
+        )
         console.log('USER Updated!')
       }
     } catch (err) {

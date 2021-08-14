@@ -13,18 +13,16 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/vuelidate', ssr: true }
+    { src: '~/plugins/vuelidate', ssr: true },
+    { src: '~/plugins/v-tailwind-picker' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -39,8 +37,7 @@ export default {
     '@nuxt/image'
   ],
 
-  image: {
-  },
+  image: {},
 
   eslint: {
     fix: true
@@ -49,7 +46,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -58,7 +56,30 @@ export default {
     proxy: false
   },
 
+  // Auth
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: false
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/users/signin', method: 'post' },
+          refresh: { url: '/users/refresh-token', method: 'post' },
+          logout: { url: '/users/logout', method: 'delete' },
+          user: { url: '/users', method: 'get' }
+        }
+      }
+    }
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {}
 }

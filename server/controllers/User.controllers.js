@@ -1,6 +1,7 @@
 const User = require('../models/User.model')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')
+const cloudinary = require('../helpers/cloudinary.helpers')
 const jwt = require('jsonwebtoken')
 
 const {
@@ -84,6 +85,56 @@ module.exports.userControllers = {
     }
   },
 
+  // UPDATE USER INFO
+  update: async (req, res, next) => {
+    try {
+      const user_details = req.body
+      const user_id = req.params.id
+
+      console.log('REQ>BODY:', req.body)
+      console.log('REQ.FILE:', req.file)
+      let savedURI = null
+
+      if (req.file) {
+        const file = req.file
+        const { path } = file 
+
+        const imageURI = await cloudinary.uploader.upload(path, {
+          folder: "Whole Care Solutions"
+        })
+
+        savedURI = imageURI.secure_url
+        // console.log(`Image URIs: ${savedURI}`)
+      }
+        // console.log(user_details)
+        // console.log(`Body from SERVER: ${user_id}`)
+
+        const userExists = await User.findOne({ _id: user_id })
+
+        if (!userExists) throw createError.NotFound('Account creation failed. Can\'t seem to find your registration details.')
+
+        const response = await User.findOneAndUpdate(
+          { _id: req.params.id },
+          {
+            ...req.body,
+            profileImage: savedURI
+          },
+          { new: true }
+        )
+
+        if (!response) throw createError(500, 'Your personal information not saved')
+      
+        // console.log(response)
+      
+        res.status(201).json({
+          message: 'Your personal information is successfully saved',
+          updatedUser: response
+        })
+    } catch (error) {
+      next(error)
+    }
+  },
+
   // SIGN IN
   signin: async (req, res, next) => {
     try {
@@ -93,7 +144,7 @@ module.exports.userControllers = {
       // check if email is registered
       const user = await User.findOne({ email: validatedCredentials.email });
 
-      if (!user) throw createError.NotFound("Invalid email and/or password");
+      if (!user) throw createError.Forbidden("Invalid email and/or password");
 
       // check password
       const isPasswordValid = await bcrypt.compare(
@@ -109,7 +160,7 @@ module.exports.userControllers = {
       const accessToken = await signAccessToken(user);
       const refreshToken = await signRefreshToken(user);
 
-      res.header("x-access-token", accessToken).send({
+      res.header("x-access-token", accessToken).status(200).send({
         message: `Log in successful`,
         token: `Bearer ${accessToken}`,
         refreshToken: `Bearer ${refreshToken}`,

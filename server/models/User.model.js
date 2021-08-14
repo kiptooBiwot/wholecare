@@ -40,6 +40,11 @@ const userSchema = new Schema(
       lowercase: true,
       enum: ['admin', 'user']
     },
+    gender: {
+      type: String,
+      trim: true,
+      enum: ['male', 'female', 'other']
+    },
     isEnabled: {
       type: Boolean,
       default: false

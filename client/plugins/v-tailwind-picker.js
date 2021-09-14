@@ -1,4 +1,4 @@
-import Vue from "vue";
-import VueTailwindPicker from "vue-tailwind-picker";
+import Vue from 'vue'
+import VueTailwindPicker from 'vue-tailwind-picker'
 
-Vue.use(VueTailwindPicker);
+Vue.use(VueTailwindPicker)

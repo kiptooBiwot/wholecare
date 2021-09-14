@@ -18,7 +18,8 @@
     "dotenv": "^9.0.2",
     "nuxt": "^2.15.7",
     "vue-tailwind-picker": "^2.0.0",
-    "vuelidate": "^0.7.6"
+    "vuelidate": "^0.7.6",
+    "vuex-map-fields": "^1.4.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",

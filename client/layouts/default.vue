@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <Nuxt />
+    <Nuxt keep-alive />
     <notification-list />
     <!-- <notification-list />
     <notification-list />

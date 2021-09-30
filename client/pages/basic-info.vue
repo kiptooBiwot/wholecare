@@ -197,6 +197,83 @@
                   </template>
                 </div>
                 <div class="block">
+                  <div>
+                    <label
+                      for="file"
+                      class="text-xs font-medium text-gray-500"
+                    >Participant's Picture</label>
+                  </div>
+                  <input
+                    ref="file"
+                    type="file"
+                    accept="images/*"
+                    class=" hidden w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 text-xs text-gray-500"
+                    @change="uploadFile"
+                  >
+                  <div class="relative inline-block">
+                    <img
+                      :src="imageUrl"
+                      class="rounded-full w-24 h-24 object-cover border-0"
+                      alt=""
+                      :class="($v.basicInfo.profilePic.$error) ? 'ring-red-500 border-red-500 focus:ring-red-500 focus:border-red-500' : null"
+                    >
+                    <div
+                      class="absolute rounded-full top-0 h-full w-full bg-black bg-opacity-25 flex items-center justify-center"
+                    >
+                      <button
+                        class="text-white hover:bg-white rounded-full hover:bg-opacity-25 p-3 focus:outline-none transition duration-300 text-xs"
+                        @click="browse"
+                      >
+                        <svg
+                          class="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                          />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        v-if="basicInfo.profilePic"
+                        class="text-white hover:bg-white rounded-full hover:bg-opacity-25 p-3 focus:outline-none transition duration-300 text-xs"
+                        @click="remove"
+                      >
+                        <svg
+                          class="w-6 h-6"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <template v-if="$v.basicInfo.profilePic.$error">
+                    <p v-if="!$v.basicInfo.profilePic.numeric" class="text-red-500 text-xs mt-1">
+                      Please add a profile image, thanks*
+                    </p>
+                  </template>
+                </div>
+                <!-- <div class="block">
                   <label for="file" class="text-sm font-medium text-gray-500">Profile Picture</label>
                   <input
                     ref="file"
@@ -204,9 +281,9 @@
                     accept="images/*"
                     class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm text-gray-500"
                     @change="change"
-                  >
-                  <!-- <image-input v-model="basicInfo.profilePic" :default-avatar="defaultAvatar" /> -->
-                </div>
+                  > -->
+                <!-- <image-input v-model="basicInfo.profilePic" :default-avatar="defaultAvatar" /> -->
+                <!-- </div> -->
                 <div class="block">
                   <label for="bio" class="text-sm font-medium text-gray-500">Bio</label>
                   <textarea
@@ -244,6 +321,7 @@ const alpha = helpers.regex('alpha', /^[a-zA-Z_ ]*$/i)
 
 export default {
   name: 'BasicInfo',
+  auth: false,
   components: {
     VueTailWindPicker: () => import('vue-tailwind-picker')
   },
@@ -263,6 +341,7 @@ export default {
       profilePic: undefined,
       bio: ''
     },
+    imageUrl: null,
     defaultAvatar: 'img/avatar.png',
     file: null,
     currentDate: new Date().toISOString().slice(0, 10)
@@ -297,11 +376,14 @@ export default {
       },
       workNumber: {
         numeric
+      },
+      profilePic: {
+        required
       }
     }
   },
   methods: {
-    ...mapActions({ updateUserInfo: 'auth/updateUserInfo' }),
+    ...mapActions({ updateUserInfo: 'authentication/updateUserInfo' }),
     async saveUserInfo () {
       if (!this.$v.$invalid) {
         try {
@@ -341,6 +423,31 @@ export default {
       // reader.onLoad = (e) => {
       //   this.basicInfo.profilePic = e.target.result
       // }
+    },
+    browse () {
+      this.$refs.file.click()
+    },
+    remove () {
+      this.basicInfo.profilePic = undefined
+      this.imageUrl = undefined
+      // this.$emit('update:formValueChange', {
+      //   label: 'personalDetails',
+      //   data: {
+      //     ...this.basicInfo,
+      //     profileImage: undefined
+      //   }
+      // })
+    },
+    uploadFile (event) {
+      const files = event.target.files
+
+      // let filename = files[0].name
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.basicInfo.profilePic = files[0]
     }
   }
 }

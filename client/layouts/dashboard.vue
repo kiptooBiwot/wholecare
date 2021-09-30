@@ -2,15 +2,16 @@
   <div class="flex flex-row min-h-screen relative bg-gray-200">
     <!-- Mobile menu bar -->
     <!-- Left NAV -->
-    <sidebar />
+    <sidebar class="hidden md:block" />
+    <mobile-menu v-show="showMobileMenu" @hideMobileMenu="showMobileMenu = false" />
     <!-- Main Content -->
     <div class="flex-1">
       <!-- NAV -->
       <div class="md:ml-2">
-        <navbar />
+        <navbar @showMobileMenu="showMobileMenu = true" />
       </div>
       <div class="px-2 py-4">
-        <Nuxt />
+        <Nuxt keep-alive />
         <!-- <div>
           <button class="flex items-center hover:border hover:border-blue-800 rounded-md p-1 hover:bg-gray-50" @click.prevent="isVisible = !isVisible">
             <NuxtImg class="rounded-full w-8 h-8 object-cover border-2 border-blue-500 hover:border-white" src="https://images.unsplash.com/photo-1446511437394-36cdff3ae1b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="" />
@@ -78,15 +79,18 @@
 // import UserInfo from '../components/auth/userInfo.vue'
 import Sidebar from '../components/dashboard/sidebar.vue'
 import Navbar from '../components/dashboard/navbar.vue'
+import MobileMenu from '../components/dashboard/mobileMenu.vue'
 
 export default {
   components: {
     // Modal,
     // UserInfo,
     Sidebar,
-    Navbar
+    Navbar,
+    MobileMenu
   },
   data: () => ({
+    showMobileMenu: false,
     showModal: false,
     isVisible: false
   })

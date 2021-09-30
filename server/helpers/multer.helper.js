@@ -11,7 +11,7 @@ module.exports = multer({
         }
     }),
     fileFilter: (req, file, next) => {
-        if (!file) throw createError('Please choose an image file')
+        if (!file) throw createError('Please choose an image file') // TODO: return next()
         console.log(`MULTER FILE: ${file}`)
         // Allowable file extensions
         const fileTypes = /jpg|jpeg|png|gif/

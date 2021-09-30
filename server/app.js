@@ -9,19 +9,21 @@ const app = express();
 
 // ROUTES
 const userRoutes = require('./routes/User.routes')
+const participantRoutes = require('./routes/Participant.routes')
 
 const PORT = process.env.PORT || 5000;
 
 // middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(morgan("dev"))
 app.use(cors())
 
 app.use('/api/v1/users', userRoutes)
+app.use('/api/v1/participant', participantRoutes)
 
 app.use(async (req, res, next) => {
-  next(createError.NotFound());
+  next(createError.NotFound())
 });
 
 app.use((err, req, res, next) => {
@@ -35,5 +37,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`Server listening on port ${PORT}`)
 })

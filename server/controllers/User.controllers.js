@@ -17,27 +17,43 @@ module.exports.userControllers = {
   // GET ALL USERS REGISTERED
   getUsers: async (req, res, next) => {
     try {
+      console.log('WE ARE HITTING the users GET Route!')
       const allUsers = await User.find({});
 
+      console.log('All USERS: ', allUsers)
       if (allUsers.length < 1)
         throw createError.NotFound("No users registered yet.");
 
-      res.status(200).json({
-        users: allUsers,
-      });
+      res.status(200).json(allUsers)
     } catch (error) {
       next(error);
     }
   },
-  // GET A PARTICULAR USER
+
+  // GET A MEMBER OF STAFF
   getUser: async (req, res, next) => {
-    const oneUser = await User.findOne({ email: req.body.email });
+    console.log()
+    const oneUser = await User.findOne({ email: req.user.email });
     try {
       if (!oneUser) throw createError.NotFound("The user is not registered.");
 
       res.status(200).json({
         user: oneUser,
       });
+    } catch (error) {
+      next(error);
+    }
+  }, 
+  
+  // GET A PARTICULAR USER
+  getStaff: async (req, res, next) => {
+    // console.log(req.params.id)
+    const oneStaff = await User.findById({ _id: req.params.id });
+    try {
+      // console.log(oneStaff)
+      if (!oneStaff) throw createError.NotFound("The user is not registered.");
+
+      res.status(200).json(oneStaff);
     } catch (error) {
       next(error);
     }
@@ -106,7 +122,7 @@ module.exports.userControllers = {
         savedURI = imageURI.secure_url
         // console.log(`Image URIs: ${savedURI}`)
       }
-        // console.log(user_details)
+        // console.log(user_details)s
         // console.log(`Body from SERVER: ${user_id}`)
 
         const userExists = await User.findOne({ _id: user_id })

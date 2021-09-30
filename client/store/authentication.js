@@ -1,6 +1,7 @@
 export const state = () => ({
   users: [],
   user: [],
+  staff: null,
   registeredUser: null
 })
 

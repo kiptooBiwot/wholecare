@@ -107,7 +107,62 @@ export const getters = {
 }
 
 export const actions = {
+  async registerParticipant ({ dispatch, state }, payload) {
+    try {
+      // TODO: Store the user id for the user registering the participant
+      console.log(...payload)
+      const response = await this.$axios.post('/participant', payload,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data boundary=<calculated when request is sent>'
+          }
+        }
+      )
 
+      if (response === 201) {
+        // next()
+        // dispatch('addNotification', {
+        //   type: 'success',
+        //   title: 'Success',
+        //   message: `${response.data.message}`
+        // },
+        // { root: true }
+        // )
+      }
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  },
+  // Update Basic information
+  async updateParticipantInfo ({ dispatch, state }, payload) {
+    try {
+      const ndiaNumber = state.ndiaNumber
+      console.log(payload)
+      console.log(ndiaNumber)
+      const response = await this.$axios.patch(`/participant/${ndiaNumber}`, payload
+        // {
+        //   headers: {
+        //     Accept: 'application/json',
+        //     'Content-Type': 'application/json'
+        //   }
+        // }
+      )
+      if (response.status === 201) {
+        dispatch('addNotification', {
+          type: 'success',
+          title: 'Success',
+          message: `${response.data.message} Sign In to access your account`
+        },
+        { root: true }
+        )
+        console.log('USER Updated!')
+      }
+    } catch (err) {
+      console.error(err)
+      return err
+    }
+  }
 }
 
 export const mutations = {

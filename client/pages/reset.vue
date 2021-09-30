@@ -52,6 +52,7 @@
 
 <script>
 export default {
+  auth: false,
   layout: 'auth'
 }
 </script>

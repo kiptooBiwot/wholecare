@@ -51,6 +51,7 @@ module.exports = {
         id: user.id,
         role: user.role,
         email: user.email,
+        isEnabled: user.isEnabled,
       }),
         (secret = process.env.REFRESH_TOKEN_SECRET);
       options = {

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-64 bg-gray-800 shadow-xl flex flex-col justify-between rounded-r-md md:block">
+  <div class="w-64 bg-gray-800 shadow-xl flex-col justify-between">
     <div>
       <div class="px-6 pt-4">
         <div class="justify-center">
@@ -63,7 +63,7 @@
             <div v-show="isVisible" class="pt-1 pl-4">
               <ul class="flex flex-col pl-2 text-gray-400 border-l border-gray-700">
                 <li>
-                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="#">
+                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="/dashboard/staff">
                     List Staff
                   </NuxtLink>
                 </li>
@@ -73,7 +73,7 @@
                   </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="#">
+                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="/dashboard/staff/manage-staff">
                     Manage Staff
                   </NuxtLink>
                 </li>
@@ -98,13 +98,72 @@
               Scheduler
             </NuxtLink>
           </li>
-          <li class="text-gray-400 hover:text-white relative">
+          <!-- <li class="text-gray-400 hover:text-white relative">
             <div class="absolute flex inset-y-0 left-0 pl-2 items-center">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
             </div>
             <NuxtLink class="hover:bg-gray-700 inline-block w-full pl-8 pr-4 py-2 text-xs rounded" to="/dashboard">
               Participants
             </NuxtLink>
+          </li> -->
+          <li class="">
+            <div class="text-gray-400 hover:text-white relative flex items-center justify-between">
+              <div class="flex items-center w-full" @click.prevent="isVisibleParticipant = !isVisibleParticipant">
+                <div class="absolute flex inset-y-0 left-0 pl-2 items-center">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+                </div>
+                <span class="hover:bg-gray-700 inline-block w-full pl-8 pr-4 py-2 text-xs rounded">
+                  Participants
+                </span>
+              </div>
+              <button class="absolute right-0 p-1">
+                <svg
+                  v-if="!isVisible"
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                <svg
+                  v-else
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+              </button>
+            </div>
+            <div v-show="isVisibleParticipant" class="pt-1 pl-4">
+              <ul class="flex flex-col pl-2 text-gray-400 border-l border-gray-700">
+                <li>
+                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="/dashboard/participant/all">
+                    List Participants
+                  </NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="/dashboard/participant">
+                    Add New Participant
+                  </NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="#">
+                    Manage Participants
+                  </NuxtLink>
+                </li>
+                <!-- <li>
+                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="#">
+                    Sub-Menu
+                  </NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="#">
+                    Sub-Menu
+                  </NuxtLink>
+                </li> -->
+              </ul>
+            </div>
           </li>
           <li class="text-gray-400 hover:text-white relative">
             <div class="absolute flex inset-y-0 left-0 pl-2 items-center">
@@ -144,7 +203,7 @@
         <hr class="border-gray-700">
       </div>
     </div>
-    <div>
+    <div class="mt-20">
       <div class="px-6">
         <ul class="flex flex-col space-y-2">
           <li class="text-gray-400 hover:text-white relative">
@@ -157,17 +216,20 @@
           </li>
         </ul>
       </div>
-      <div class="px-6 px-1">
+      <div class="px-6 py-1">
         <hr class="border-gray-700">
       </div>
       <div class="bg-gray-800 px-6 pt-3 pb-8 flex items-center justify-between">
         <div class="flex items-center">
-          <div class="relative rounded-full before:absolute before:w-2 after:h-2 before:bg-green-500 before:rounded-full before:right-0 before:bottom-0 before:ring-1 before:ring-white">
-            <NuxtImg class="w-10 h-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1446511437394-36cdff3ae1b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" />
+          <div v-if="$auth.user.profileImage" class="relative rounded-full before:absolute before:w-2 after:h-2 before:bg-green-500 before:rounded-full before:right-0 before:bottom-0 before:ring-1 before:ring-white">
+            <NuxtImg class="w-10 h-10 rounded-full object-cover" :src="$auth.user.profileImage" />
+          </div>
+          <div v-else class="relative rounded-full before:absolute before:w-2 after:h-2 before:bg-green-500 before:rounded-full before:right-0 before:bottom-0 before:ring-1 before:ring-white">
+            <NuxtImg class="w-10 h-10 rounded-full object-cover" src="/img/avatar.png" />
           </div>
           <div class="flex flex-col pl-3 text-gray-400 text-xs">
-            <span class="font-semibold text-sm">Jane Doe</span>
-            <span class="font-light tracking-tight">janedoe@aol.com</span>
+            <span class="font-semibold text-sm">{{ $auth.user.firstName + ' ' + $auth.user.surname }}</span>
+            <span class="font-light tracking-tight">{{ $auth.user.email }}</span>
           </div>
         </div>
         <button class="text-gray-400 bg-gray-800 rounded">
@@ -181,7 +243,8 @@
 <script>
 export default {
   data: () => ({
-    isVisible: false
+    isVisible: false,
+    isVisibleParticipant: false
   })
 }
 </script>

@@ -1,15 +1,15 @@
 <template>
   <div>
-    Dashboard is being rendered Now!
+    <nuxt-child />
   </div>
 </template>
 
 <script>
 export default {
   layout: 'dashboard'
-
 }
 </script>
+
 <style>
 
 </style>

@@ -208,6 +208,7 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'RegisterUser',
+  auth: false,
   mixins: [validationMixin],
   async asyncData ({ $axios }) {
     try {
@@ -258,8 +259,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions({ registerUser: 'auth/registerUser' }),
+    ...mapActions({ registerUser: 'authentication/registerUser' }),
     async signUp () {
+      console.log('SIGN UP IS BEING')
       this.$v.$touch()
 
       if (!this.$v.$invalid) {

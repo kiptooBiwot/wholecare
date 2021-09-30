@@ -1,15 +1,17 @@
 <template>
   <div>
-    Dashboard is being rendered Now!
+    <h3 class="h3">
+      Manage Staff table
+    </h3>
   </div>
 </template>
 
 <script>
 export default {
   layout: 'dashboard'
-
 }
 </script>
+
 <style>
 
 </style>

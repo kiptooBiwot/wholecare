@@ -56,26 +56,33 @@ export default {
     baseURL: process.env.BASE_URL || 'http://localhost:5000/api/v1/',
     proxy: false
   },
+  router: {
+    middleware: ['auth']
+  },
 
   // Auth
   auth: {
     strategies: {
       local: {
+        scheme: 'refresh',
         token: {
-          property: 'token',
-          global: true
+          property: 'token'
           // required: true,
           // type: 'Bearer'
         },
+        refreshToken: {
+          property: 'refreshToken',
+          data: 'refreshToken'
+        },
         user: {
-          property: false
+          property: 'user'
           // autoFetch: true
         },
         endpoints: {
           login: { url: '/users/signin', method: 'post' },
           refresh: { url: '/users/refresh-token', method: 'post' },
           logout: { url: '/users/logout', method: 'delete' },
-          user: { url: '/users', method: 'get' }
+          user: { url: '/users/me', method: 'get' }
         }
       }
     }

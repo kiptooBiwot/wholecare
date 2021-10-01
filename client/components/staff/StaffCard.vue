@@ -5,7 +5,7 @@
         <div class="space-y-3">
           <div class="mt-4">
             <nuxt-img v-if="staff.profileImage" class="w-h-28 h-28 mx-auto rounded-full object-cover" :src="staff.profileImage" />
-            <nuxt-img v-else class="w-h-28 h-28 mx-auto rounded-full object-cover" src="/img/avatar.png" />
+            <nuxt-img v-else class="w-h-28 h-28 mx-auto rounded-full object-cover" src="https://res.cloudinary.com/dhakagqld/image/upload/v1633068042/Whole%20Care%20Solutions/static/avatar_pidr99.png" />
           </div>
           <div class="grid text-center">
             <span class="text-gray-500 font-semibold text-base">

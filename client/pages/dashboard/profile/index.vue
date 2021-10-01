@@ -12,8 +12,8 @@
       <div>
         <div class="w-full h-auto">
           <div class="w-full">
-            <nuxt-img v-if="$auth.user.gender === 'male'" src="img/colors.jpg" class="w-full h-24 md:h-64 object-cover bg-center overflow-hidden rounded-t-md" />
-            <nuxt-img v-if="$auth.user.gender === 'female'" src="img/flowers.jpg" class="w-full h-24 md:h-64 object-cover bg-top overflow-hidden rounded-t-md" />
+            <nuxt-img v-if="$auth.user.gender === 'male'" src="https://res.cloudinary.com/dhakagqld/image/upload/v1633068054/Whole%20Care%20Solutions/static/colors_hpvote.jpg" class="w-full h-24 md:h-64 object-cover bg-center overflow-hidden rounded-t-md" />
+            <nuxt-img v-if="$auth.user.gender === 'female'" src="https://res.cloudinary.com/dhakagqld/image/upload/v1633068043/Whole%20Care%20Solutions/static/flowers_oecy7i.jpg" class="w-full h-24 md:h-64 object-cover bg-top overflow-hidden rounded-t-md" />
           </div>
           <div class="flex justify-center">
             <div class="w-full md:w-10/12 md:-mt-32 bg-white h-auto pb-16 md:rounded-lg shadow-lg p-4 relative">

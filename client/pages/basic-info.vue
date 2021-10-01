@@ -1,14 +1,14 @@
 <template>
   <div class="w-full flex flex-row h-screen">
     <div class="hidden md:block md:w-1/3 h-screen">
-      <nuxt-img class="h-full object-cover" src="/img/auth2.jpg" />
+      <nuxt-img class="h-full object-cover" src="https://res.cloudinary.com/dhakagqld/image/upload/v1633068047/Whole%20Care%20Solutions/static/auth2_x8nbog.jpg" />
     </div>
-    <div class="w-full md:w-2/3 bg-gray-50 pt-5">
+    <div class="w-full md:w-2/3 bg-gray-50">
       <div class="m-4 border border-gray-100 bg-white rounded-lg shadow-lg">
         <form action="" enctype="multipart/form-data" method="post" @submit.prevent="saveUserInfo">
           <div class="p-4 md:p-6 space-y-2">
             <div class="flex justify-between items-end">
-              <nuxt-img class="w-24 md:w-48" src="/img/logo.png" />
+              <nuxt-img class="w-24 md:w-48" src="https://res.cloudinary.com/dhakagqld/image/upload/v1633068041/Whole%20Care%20Solutions/static/logo_ssk2lw.png" />
               <h3 class="text-lg font-bold justify-end md:text-xl md:font-bold">
                 Basic Information
               </h3>
@@ -81,12 +81,14 @@
                   </template>
                 </div>
                 <div class="block">
-                  <label for="title" class="text-sm font-medium text-gray-500">Title</label>
+                  <label for="title" class="text-sm font-medium text-gray-500">Professional Title</label>
                   <input
                     id="title"
                     v-model.trim="basicInfo.title"
                     type="text"
                     name="title"
+                    class="placeholder-text-xs placeholder-gray-300"
+                    placeholder="E.g. Nutritionist or Software Developer "
                     :class="($v.basicInfo.title.$error) ? 'ring-red-500 border-red-500 focus:ring-red-500 focus:border-red-500' : null"
                     @blur="$v.basicInfo.title.$touch()"
                   >
@@ -98,14 +100,16 @@
                 </div>
                 <div class="block">
                   <label for="dob" class="text-sm font-medium text-gray-500">Date of Birth</label>
-                  <VueTailWindPicker
-                    :init="false"
-                    :start-date="'1930-01-01'"
-                    :end-date="currentDate"
-                    @change="(v) => basicInfo.dob = v"
-                  >
-                    <input v-model.trim="basicInfo.dob" type="text" placeholder="Select your birthday">
-                  </VueTailWindPicker>
+                  <client-only>
+                    <VueTailWindPicker
+                      :init="false"
+                      :start-date="'1930-01-01'"
+                      :end-date="currentDate"
+                      @change="(v) => basicInfo.dob = v"
+                    >
+                      <input v-model.trim="basicInfo.dob" type="text" class="placeholder-text-xs placeholder-gray-300" placeholder="Select your birthday">
+                    </VueTailWindPicker>
+                  </client-only>
                   <!-- <input
                     id="dob"
                     v-model.trim="basicInfo.dob"
@@ -131,7 +135,7 @@
                     id="gender"
                     v-model.trim="basicInfo.gender"
                   >
-                    <option value="" selected>
+                    <option value="" class="" selected>
                       Please select one
                     </option>
                     <option value="male">

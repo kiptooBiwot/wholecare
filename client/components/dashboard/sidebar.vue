@@ -118,7 +118,7 @@
               </div>
               <button class="absolute right-0 p-1">
                 <svg
-                  v-if="!isVisible"
+                  v-if="!isVisibleParticipant"
                   class="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
@@ -138,7 +138,7 @@
             <div v-show="isVisibleParticipant" class="pt-1 pl-4">
               <ul class="flex flex-col pl-2 text-gray-400 border-l border-gray-700">
                 <li>
-                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="/dashboard/participant/all">
+                  <NuxtLink class="inline-block w-full px-4 py-2 text-xs rounded hover:bg-gray-700 hover:text-white" to="#">
                     List Participants
                   </NuxtLink>
                 </li>

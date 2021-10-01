@@ -53,9 +53,22 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.BASE_URL || 'http://localhost:5000/api/v1/',
+    baseURL: 'http://localhost:5000/api/v1/',
     proxy: false
   },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BASE_URL
+    }
+  },
+
+  // privateRuntimeConfig: {
+  //   axios: {
+  //     baseURL: process.env.BASE_URL
+  //   }
+  // },
+
   router: {
     middleware: ['auth']
   },

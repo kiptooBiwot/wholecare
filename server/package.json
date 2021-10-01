@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon app.js",
     "test": "jest --config ./jest.config.json",
-    "test:watch": "npm run test -- --watchAll"
+    "test:watch": "npm run test -- --watchAll",
+    "start":"node app.js"
   },
   "repository": {
     "type": "git",

@@ -1,10 +1,10 @@
 <template>
   <div class="w-full flex flex-row h-screen">
-    <div class="w-2/3">
-      <img class="h-full object-cover" src="~/assets/img/auth2.jpg" alt="Login" srcset="">
+    <div class="hidden md:block md:w-2/3 min-h-screen">
+      <nuxt-img class="h-full object-cover" src="https://res.cloudinary.com/dhakagqld/image/upload/v1633068047/Whole%20Care%20Solutions/static/auth2_x8nbog.jpg" />
     </div>
-    <div class="w-1/3 flex h-screen">
-      <div class="m-auto p-4">
+    <div class="w-full md:w-1/3 flex h-auto">
+      <div class="m-auto md:p-4">
         <img class="w-48 mx-auto" src="~/assets/img/logo.png" alt="">
 
         <div class="mx-10 mt-5 space-y-1">

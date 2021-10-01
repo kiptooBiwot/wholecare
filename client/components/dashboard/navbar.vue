@@ -48,7 +48,7 @@
         <div class="relative" @keydown.esc="isVisible = false">
           <button class="relative z-10 flex items-center text-gray-500 rounded-lg p-1 hover:text-gray-800 hover:bg-gray-100" @click.prevent="isVisible = !isVisible">
             <nuxt-img v-if="$auth.user.profileImage" class="rounded-full hover:ring-gray-300 w-10 h-10 object-cover border-2 ring-blue-500" :src="$auth.user.profileImage" alt="" />
-            <nuxt-img v-else class="rounded-full hover:border-gray-300 w-10 h-10 object-cover ring-2 ring-blue-500" src="/img/avatar.png" />
+            <nuxt-img v-else class="rounded-full hover:border-gray-300 w-10 h-10 object-cover ring-2 ring-blue-500" src="https://res.cloudinary.com/dhakagqld/image/upload/v1633068042/Whole%20Care%20Solutions/static/avatar_pidr99.png" />
             <span class="text-xs font-semibold ml-1 hidden md:block">{{ $auth.user.firstName + ' ' + $auth.user.surname }}</span>
             <svg
               class="h-4 pl-1"

@@ -43,6 +43,11 @@ export const actions = {
         console.log(response.data.message)
       }
     } catch (err) {
+      dispatch('addNotification', {
+        type: 'error',
+        title: 'An Error Occured',
+        message: err.message
+      }, { root: true })
       return err
     }
   },

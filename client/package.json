@@ -18,7 +18,8 @@
     "core-js": "^3.16.0",
     "dayjs": "^1.10.7",
     "dotenv": "^9.0.2",
-    "nuxt": "^2.15.7",
+    "nuxt": "^2.13.3",
+    "uid": "^2.0.0",
     "vue-tailwind-picker": "^2.0.0",
     "vuelidate": "^0.7.6",
     "vuex-map-fields": "^1.4.1"

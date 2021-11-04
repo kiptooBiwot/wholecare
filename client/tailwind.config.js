@@ -15,7 +15,8 @@ module.exports = {
         mono: ['Poppins'],
         display: ['Poppins'],
         body: ['Poppins']
-      }
+      },
+      tableLayout: ['hover', 'focus']
     }
   },
   variants: {

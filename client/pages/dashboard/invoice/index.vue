@@ -5,13 +5,13 @@
       <div class="flex flex-row justify-between mb-8">
         <div class="flex flex-col">
           <span class="h3">Invoices</span>
-          <span class="text-gray-500 text-xs font-semibold">There are {{ 5 }} invoices</span>
+          <span class="text-gray-500 text-xs font-semibold">There are {{ invoices.length }} invoices</span>
         </div>
         <div class="flex items-center">
           <!-- Filter Dropdown -->
           <div class="relative" @keydown.esc="toggleFilterMenu = false">
             <button class="relative z-10 flex items-center text-gray-500  border rounded-full px-2 py-2 mr-2 hover:text-gray-800 hover:bg-gray-100" @click.prevent="toggleFilterMenu = !toggleFilterMenu">
-              <span class="text-xs font-semibold">Filter by status</span>
+              <span class="text-xs font-semibold">Filter by status<span v-if="filteredInvoice">: {{ filteredInvoice }}</span></span>
               <svg
                 class="h-4 pl-1 text-blue-400"
                 fill="none"
@@ -20,28 +20,28 @@
                 xmlns="http://www.w3.org/2000/svg"
               ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
             </button>
-            <button v-if="toggleFilterMenu" tabindex="-1" class="fixed inset-0 h-full w-full bg-black opacity-20 cursor-default" @click="toggleFilterMenu = false" />
+            <button v-if="toggleFilterMenu" tabindex="-1" class="fixed inset-0 h-full w-full bg-black opacity-20 cursor-default" @click="toggleFilterMenu = !toggleFilterMenu" />
             <div :class="toggleFilterMenu ? 'block' : 'hidden'" class="flex flex-col absolute overflow-hidden w-36 text-gray-500 text-xs font-semibold bg-white rounded-md shadow-lg">
               <NuxtLink to="/dashboard/invoice">
-                <div class="flex items-center hover:text-blue-600 px-4 py-3 hover:bg-gray-300" @click="isVisible = false">
+                <div class="flex items-center hover:text-blue-600 px-4 py-3 hover:bg-gray-300" @click="filteredInvoices">
                   <span>
                     Draft
                   </span>
                 </div>
               </NuxtLink><NuxtLink to="/dashboard/invoice">
-                <div class="flex items-center hover:text-blue-600 px-4 py-3 hover:bg-gray-300" @click="isVisible = false">
+                <div class="flex items-center hover:text-blue-600 px-4 py-3 hover:bg-gray-300" @click="filteredInvoices">
                   <span>
                     Pending
                   </span>
                 </div>
               </NuxtLink><NuxtLink to="/dashboard/invoice">
-                <div class="flex items-center hover:text-blue-600 px-4 py-3 hover:bg-gray-300" @click="isVisible = false">
+                <div class="flex items-center hover:text-blue-600 px-4 py-3 hover:bg-gray-300" @click="filteredInvoices">
                   <span>
                     Paid
                   </span>
                 </div>
               </NuxtLink><NuxtLink to="/dashboard/invoice">
-                <div class="flex items-center hover:text-blue-600 px-4 py-3 hover:bg-gray-300" @click="isVisible = false">
+                <div class="flex items-center hover:text-blue-600 px-4 py-3 hover:bg-gray-300" @click="filteredInvoices">
                   <span>
                     Clear Filters
                   </span>
@@ -71,7 +71,8 @@
         </div>
       </div>
       <div v-if="invoices.length > 0">
-        <invoice v-for="(invoice, index) in invoices" :key="index" :invoice="invoice" />
+        <!-- Filter from filteredData if no filtered data **invoices is looped through** -->
+        <invoice v-for="(invoice, index) in filteredData" :key="index" :invoice="invoice" />
       </div>
       <div v-else class="flex flex-col bg-white p-4 w-full my-4 rounded-md h-full mx-auto items-center">
         <img src="@/assets/img/no-data.jpg" alt="No Invoices Found" width="250" height="250">
@@ -93,10 +94,27 @@ import Invoice from '../../../components/invoice/invoice.vue'
 export default {
   components: { Invoice },
   data: () => ({
-    toggleFilterMenu: false
+    toggleFilterMenu: false,
+    filteredInvoice: null
   }),
   computed: {
-    ...mapState('invoice', ['invoicesLoaded', 'invoices', 'editInvoice'])
+    ...mapState('invoice', ['invoicesLoaded', 'invoices', 'editInvoice']),
+
+    // Filter invoices by their status
+    filteredData () {
+      return this.invoices.filter((invoice) => {
+        if (this.filteredInvoice === 'Draft') {
+          return invoice.invoiceDraft === true
+        }
+        if (this.filteredInvoice === 'Pending') {
+          return invoice.invoicePending === true
+        }
+        if (this.filteredInvoice === 'Paid') {
+          return invoice.invoicePaid === true
+        }
+        return this.invoices
+      })
+    }
   },
   created () {
     this.getInvoices()
@@ -108,6 +126,16 @@ export default {
       if (this.editInvoice) {
         this.TOGGLE_EDIT_INVOICE()
       }
+    },
+
+    filteredInvoices (e) {
+      if (e.target.innerText === 'Clear Filters') {
+        this.filteredInvoice = null
+        this.toggleFilterMenu = !this.toggleFilterMenu
+        return
+      }
+      this.filteredInvoice = e.target.innerText
+      this.toggleFilterMenu = !this.toggleFilterMenu
     }
   }
 }

@@ -164,9 +164,9 @@
             <button v-if="!editInvoice" type="submit" class="bg-purple-600 text-white text-xs px-4 py-2 uppercase rounded-full" @click.prevent="uploadInvoice">
               Create Invoice
             </button>
-            <div v-if="editInvoice">
+            <!-- <div v-if="editInvoice">
               {{ currentInvoice.invoiceItemList }}
-            </div>
+            </div> -->
             <button v-if="editInvoice" type="submit" class="bg-purple-600 text-white text-xs px-4 py-2 uppercase rounded-full" @click.prevent="updateInvoice">
               Update Invoice
             </button>
@@ -240,7 +240,7 @@ export default {
     }
 
     if (this.editInvoice) {
-      const currentInvoiceEdit = this.currentInvoice[0]
+      const currentInvoiceEdit = this.currentInvoice
 
       this.id = currentInvoiceEdit.id
       this.mainId = currentInvoiceEdit._id

@@ -11,33 +11,23 @@ module.exports.participantControllers = {
   registerParticipant: async (req, res, next) => {
     try {
       console.log('REQ>BODY:', req.body)
-      // console.log('PARSED Body', req.body)
-      // console.log('REQ.FILE:', req.file)
-      // console.log('REP DETAILS:', req.body.repDetails)
 
+      // Destructure repDetails array 
+      const { ndiaNumber, firstName, middleName, surname, gender, dob, homePhone, mobilePhone, workPhone, profileImage, emailAddress, advocateNeeded, auditingConsent, culturalPreference, countryOfBirth, preferredLanguage, culturalActivity, interpreterRequired, indigenousStatus, currentAddress, haveNdiaPlan, ndiaApprovalDate, ndiaReasonForNotHaving, decisionMaker, decisionMakerName, decisionMakerPhone, decisionMakerEmail, privacyPreferences, financialMgt, repDetails } = req.body
 
-      // const representativeDetails = [
-      //   {
-      //     firstName: req.body.repDetails.firstName,
-      //     middleName: req.body.repDetails.middleName,
-      //     surname: req.body.repDetails.surname,
-      //     relationship: req.body.repDetails.relationship,
-      //     mobileNo: req.body.repDetails.mobileNo,
-      //     homeNo: req.body.repDetails.homeNo,
-      //     workNo: req.body.repDetails.workNo,
-      //     organization: req.body.repDetails.organization,
-      //     position: req.body.repDetails.position,
-      //     emailAddress: req.body.repDetails.emailAddress,
-      //     currentAddress: req.body.repDetails.currentAddress
-      //   }
-      // ]
-      // console.log(representativeDetails)
+      const repDetailsDeserialized = JSON.parse(repDetails)
 
+      console.log(typeof (repDetailsDeserialized))
+
+      const formattedRepDetails = repDetailsDeserialized.map(item => ({ ...item }))
+      // console.log(`Formatted REP Details: ${formattedRepDetails}`)
+
+      // Handle images and save to Cloudinary
       let savedURI = null
 
       if (req.file) {
         const file = req.file
-        const { path } = file 
+        const { path } = file
 
         const imageURI = await cloudinary.uploader.upload(path, {
           folder: "Whole Care Solutions"
@@ -47,13 +37,13 @@ module.exports.participantControllers = {
         // console.log(`Image URIs: ${savedURI}`)
       }
 
-       const participantExists = await Participant.findOne({ ndiaNumber: req.body.ndiaNumber })
+      const participantExists = await Participant.findOne({ ndiaNumber: req.body.ndiaNumber })
 
       if (participantExists) throw createError(400, 'The participant is already registered')
 
       const newParticipant = new Participant({
-        ...req.body,
-        profileImage: savedURI
+        ndiaNumber, firstName, middleName, surname, gender, dob, homePhone, mobilePhone, workPhone, profileImage, emailAddress, advocateNeeded, auditingConsent, culturalPreference, countryOfBirth, preferredLanguage, culturalActivity, interpreterRequired, indigenousStatus, currentAddress, haveNdiaPlan, ndiaApprovalDate, ndiaReasonForNotHaving, decisionMaker, decisionMakerName, decisionMakerPhone, decisionMakerEmail, privacyPreferences, financialMgt, repDetails: formattedRepDetails,
+        profileImage: savedURI,
       })
 
       const savedParticipant = await newParticipant.save()

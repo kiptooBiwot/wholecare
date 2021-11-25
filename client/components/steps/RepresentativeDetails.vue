@@ -1,8 +1,14 @@
 <template>
   <div>
-    <div v-for="(repDetail, index) in repDetails" :key="index" class="bg-white w-full h-auto p-6 mb-8 shadow-xl rounded-lg">
+    <div
+      v-for="(repDetail, index) in repDetails"
+      :key="index"
+      class="bg-white w-full h-auto p-6 mb-8 shadow-xl rounded-lg"
+    >
       <div class="flex items-center justify-between">
-        <div class="w-full text-gray-500 text-lg font-bold justify-end md:text-xl md:font-bold">
+        <div
+          class="w-full text-gray-500 text-lg font-bold justify-end md:text-xl md:font-bold"
+        >
           Representative {{ index + 1 }} Details
         </div>
         <div>
@@ -13,13 +19,23 @@
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             @click.prevent="deleteCard(index)"
-          ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </div>
       </div>
       <div class="block md:flex md:justify-between md:gap-6">
         <div class="block md:w-1/2">
           <div class="block">
-            <label for="firstName" class="text-xs font-medium text-gray-500">First Name*</label>
+            <label
+              for="firstName"
+              class="text-xs font-medium text-gray-500"
+            >First Name*</label>
             <input
               id="first-name"
               v-model="repDetail.firstName"
@@ -29,7 +45,10 @@
             >
           </div>
           <div class="block">
-            <label for="middleName" class="text-xs font-medium text-gray-500">Middle Name</label>
+            <label
+              for="middleName"
+              class="text-xs font-medium text-gray-500"
+            >Middle Name</label>
             <input
               id="middle-name"
               v-model="repDetail.middleName"
@@ -38,7 +57,10 @@
             >
           </div>
           <div class="block">
-            <label for="surname" class="text-xs font-medium text-gray-500">Surname*</label>
+            <label
+              for="surname"
+              class="text-xs font-medium text-gray-500"
+            >Surname*</label>
             <input
               id="surname"
               v-model="repDetail.surname"
@@ -47,7 +69,10 @@
             >
           </div>
           <div class="block">
-            <label for="relationship" class="text-xs font-medium text-gray-500">Relationship to Participant</label>
+            <label
+              for="relationship"
+              class="text-xs font-medium text-gray-500"
+            >Relationship to Participant</label>
             <input
               id="relationship"
               v-model="repDetail.relationship"
@@ -56,7 +81,10 @@
             >
           </div>
           <div class="block">
-            <label for="mobile-no" class="text-xs font-medium text-gray-500">Mobile Number</label>
+            <label
+              for="mobile-no"
+              class="text-xs font-medium text-gray-500"
+            >Mobile Number</label>
             <!-- pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" -->
             <input
               id="mobile-no"
@@ -66,7 +94,10 @@
             >
           </div>
           <div class="block">
-            <label for="home-no" class="text-xs font-medium text-gray-500">Home Number</label>
+            <label
+              for="home-no"
+              class="text-xs font-medium text-gray-500"
+            >Home Number</label>
             <!-- pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" -->
             <input
               id="home-no"
@@ -78,7 +109,10 @@
         </div>
         <div class="block md:w-1/2">
           <div class="block">
-            <label for="work-no" class="text-xs font-medium text-gray-500">Work Phone</label>
+            <label
+              for="work-no"
+              class="text-xs font-medium text-gray-500"
+            >Work Phone</label>
             <!-- pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" -->
             <input
               id="work-no"
@@ -88,7 +122,10 @@
             >
           </div>
           <div class="block">
-            <label for="organization" class="text-xs font-medium text-gray-500">Organization</label>
+            <label
+              for="organization"
+              class="text-xs font-medium text-gray-500"
+            >Organization</label>
             <input
               id="organization"
               v-model="repDetail.organization"
@@ -98,7 +135,10 @@
             >
           </div>
           <div class="block">
-            <label for="position" class="text-xs font-medium text-gray-500">Position</label>
+            <label
+              for="position"
+              class="text-xs font-medium text-gray-500"
+            >Position</label>
             <input
               id="position"
               v-model="repDetail.position"
@@ -108,7 +148,10 @@
             >
           </div>
           <div class="block">
-            <label for="email" class="text-xs font-medium text-gray-500">Email Address</label>
+            <label
+              for="email"
+              class="text-xs font-medium text-gray-500"
+            >Email Address</label>
             <input
               id="email"
               v-model="repDetail.emailAddress"
@@ -117,7 +160,10 @@
             >
           </div>
           <div class="block">
-            <label for="current-address" class="text-xs font-medium text-gray-500">Current Address</label>
+            <label
+              for="current-address"
+              class="text-xs font-medium text-gray-500"
+            >Current Address</label>
             <textarea
               id="current-address"
               v-model="repDetail.currentAddress"
@@ -130,7 +176,10 @@
       </div>
     </div>
     <div class="mt-6">
-      <button class="px-3 py-1.5 rounded-md bg-blue-700 text-blue-100 font-semibold text-xs hover:bg-blue-800 hover:text-white" @click.prevent="addRepresentative">
+      <button
+        class="px-3 py-1.5 rounded-md bg-blue-700 text-blue-100 font-semibold text-xs hover:bg-blue-800 hover:text-white"
+        @click.prevent="addRepresentative"
+      >
         Add Representative
       </button>
     </div>
@@ -151,6 +200,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

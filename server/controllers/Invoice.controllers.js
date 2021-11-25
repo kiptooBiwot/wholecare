@@ -24,7 +24,7 @@ module.exports = {
   createInvoice: async (req, res, next) => {
     try {
       const { id, billerStreetAddress, billerCity, billerZipCode, billerCountry, clientName, clientEmail, clientStreetAddress, clientCity, clientZipCode, clientCountry, invoiceDateUnix, invoiceDate, paymentTerms, paymentDueDateUnix, paymentDueDate, productDescription, invoicePending, invoiceDraft, invoiceTotal, invoiceItemList } = req.body
-      console.log('REQ.BODY: ', req.body)
+      // console.log('REQ.BODY: ', req.body)
       const formattedItems =  invoiceItemList.map(item => ({ ...item }))
 
       const newInvoice = new Invoice({
@@ -48,7 +48,7 @@ module.exports = {
     try {
       const id = req.params.id
 
-      console.log(`From FE: ${req.body}`)
+      // console.log(`From FE: ${req.body}`)
       
       const invoiceFound =  await Invoice.findById({ _id: id })
       

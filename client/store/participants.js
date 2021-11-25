@@ -168,9 +168,66 @@ export const actions = {
       data.append('decisionMakerEmail', state.decisionMakerEmail)
       data.append('privacyPreferences', state.privacyPreferences)
       data.append('financialMgt', state.financialMgt)
+
+      // Representative Details
       data.append('repDetails', JSON.stringify(state.repDetails))
 
-      // await dispatch(this.registerParticipant(data))
+      // Health Support Needs
+      data.append('needsMobilityAssistance', state.needsMobilityAssistance)
+      data.append('mobilityIndependent', state.mobilityIndependent)
+      data.append('mobilityDescription', state.mobilityDescription)
+      data.append('hearingIssues', state.hearingIssues)
+      data.append('hearingDescription', state.hearingDescription)
+      data.append('visionIssues', state.visionIssues)
+      data.append('visionDescription', state.visionDescription)
+      data.append('needsCommunicationAssistance', state.needsCommunicationAssistance)
+      data.append('communicationPreference', JSON.stringify(state.communicationPreference))
+      data.append('otherCommunication', state.otherCommunication)
+      data.append('hadCommunicationAssessment', state.hadCommunicationAssessment)
+      data.append('memoryCognition', state.memoryCognition)
+      data.append('memoryDescription', state.memoryDescription)
+
+      // Disability Support Needs
+      data.append('aidEquipmentUsed', state.aidEquipmentUsed)
+      data.append('needsAssistance', state.needsAssistance)
+      data.append('staffRequireTraining', state.staffRequireTraining)
+      data.append('showeringAssistance', state.showeringAssistance)
+      data.append('showeringDetails', state.showeringDetails)
+      data.append('groomingAssistance', state.groomingAssistance)
+      data.append('groomingDetails', state.groomingDetails)
+      data.append('dressingAssistance', state.dressingAssistance)
+      data.append('dressingDetails', state.dressingDetails)
+      data.append('toiletingAssistance', state.toiletingAssistance)
+      data.append('toiletingDetails', state.toiletingDetails)
+      data.append('eatingAssistance', state.eatingAssistance)
+      data.append('eatingDetails', state.eatingDetails)
+      data.append('transferAssistance', state.transferAssistance)
+      data.append('transferDetails', state.transferDetails)
+
+      // Behvior support needs
+      data.append('upsettingBehavior', state.upsettingBehavior)
+      data.append('concerningBehavior', state.concerningBehavior)
+      data.append('disruptiveBehavior', state.disruptiveBehavior)
+      data.append('hasBehaviorSupportPlan', state.hasBehaviorSupportPlan)
+      data.append('behaviorRiskAssessment', state.behaviorRiskAssessment)
+
+      // Community Support Needs
+      data.append('assistanceGettingAround', state.assistanceGettingAround)
+      data.append('transportAssistance', state.transportAssistance)
+      data.append('assistanceToActivities', state.assistanceToActivities)
+      data.append('transportType', state.transportType)
+      data.append('communityActivities', state.communityActivities)
+
+      // Privacy Statement
+      data.append('participantName', state.participantName)
+      data.append('participantSignature', state.participantSignature)
+      data.append('participantSignDate', state.participantSignDate)
+      data.append('staffName', state.staffName)
+      data.append('staffSignature', state.staffSignature)
+      data.append('staffSignDate', state.staffSignDate)
+      data.append('verbalConsentName', state.verbalConsentName)
+      data.append('verbalConsentSignature', state.verbalConsentSignature)
+      data.append('verbalConsentSignDate', state.verbalConsentSignDate)
 
       try {
         // TODO: Store the user id for the user registering the participant

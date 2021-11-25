@@ -167,7 +167,196 @@ const participantSchema = new Schema({
         trim: true
       },
     }
-  ]
+  ],
+  needsMobilityAssistance: {
+    type: String,
+    trim: true
+  },
+  mobilityIndependent: {
+    type: String,
+    trim: true
+  },
+  mobilityDescription: {
+    type: String,
+    trim: true
+  },
+  hearingIssues: {
+    type: String,
+    trim: true
+  },
+  hearingDescription: {
+    type: String,
+    trim: true
+  },
+  visionIssues: {
+    type: String,
+    trim: true
+  },
+  visionDescription: {
+    type: String,
+    trim: true
+  },
+  needsCommunicationAssistance: {
+    type: String,
+    trim: true
+  },
+  communicationPreference: [{
+    type: String,
+    trim: true
+  }],
+  otherCommunication: {
+    type: String,
+    trim: true
+  },
+  hadCommunicationAssessment: {
+    type: String,
+    trim: true
+  },
+  memoryCognition: {
+    type: String,
+    trim: true
+  },
+  memoryDescription: {
+    type: String,
+    trim: true
+  },
+  aidEquipmentUsed: {
+    type: String,
+    trim: true
+  },
+  needsAssistance: {
+    type: String,
+    trim: true
+  },
+  staffRequireTraining: {
+    type: String,
+    trim: true
+  },
+  showeringAssistance: {
+    type: String,
+    trim: true
+  },
+  showeringDetails: {
+    type: String,
+    trim: true
+  },
+  groomingAssistance: {
+    type: String,
+    trim: true
+  },
+  groomingDetails: {
+    type: String,
+    trim: true
+  },
+  dressingAssistance: {
+    type: String,
+    trim: true
+  },
+  dressingDetails: {
+    type: String,
+    trim: true
+  },
+  toiletingAssistance: {
+    type: String,
+    trim: true
+  },
+  toiletingDetails: {
+    type: String,
+    trim: true
+  },
+  eatingAssistance: {
+    type: String,
+    trim: true
+  },
+  eatingDetails: {
+    type: String,
+    trim: true
+  },
+  transferAssistance: {
+    type: String,
+    trim: true
+  },
+  transferDetails: {
+    type: String,
+    trim: true
+  },
+  upsettingBehavior: {
+    type: String,
+    trim: true
+  },
+  concerningBehavior: {
+    type: String,
+    trim: true
+  },
+  disruptiveBehavior: {
+    type: String,
+    trim: true
+  },
+  hasBehaviorSupportPlan: {
+    type: String,
+    trim: true
+  },
+  behaviorRiskAssessment: {
+    type: String,
+    trim: true
+  },
+  assistanceGettingAround: {
+    type: String,
+    trim: true
+  },
+  transportAssistance: {
+    type: String,
+    trim: true
+  },
+  assistanceToActivities: {
+    type: String,
+    trim: true
+  },
+  transportType: {
+    type: String,
+    trim: true
+  },
+  communityActivities: {
+    type: String,
+    trim: true
+  },
+  participantName: {
+    type: String,
+    trim: true
+  },
+  participantSignature: {
+    type: String,
+    trim: true
+  },
+  participantSignDate: {
+    type: Date,
+    trim: true
+  },
+  staffName: {
+    type: String,
+    trim: true
+  },
+  staffSignature: {
+    type: String,
+    trim: true
+  },
+  staffSignDate: {
+    type: Date,
+    trim: true
+  },
+  verbalConsentName: {
+    type: String,
+    trim: true
+  },
+  verbalConsentSignature: {
+    type: String,
+    trim: true
+  },
+  verbalConsentSignDate: {
+    type: Date,
+    trim: true
+  },
+
 }, { timestamps: true })
 
 module.exports = model('Participant', participantSchema)

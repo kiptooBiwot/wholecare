@@ -12,14 +12,19 @@ module.exports.participantControllers = {
     try {
       console.log('REQ>BODY:', req.body)
 
+
+
       // Destructure repDetails array 
-      const { ndiaNumber, firstName, middleName, surname, gender, dob, homePhone, mobilePhone, workPhone, profileImage, emailAddress, advocateNeeded, auditingConsent, culturalPreference, countryOfBirth, preferredLanguage, culturalActivity, interpreterRequired, indigenousStatus, currentAddress, haveNdiaPlan, ndiaApprovalDate, ndiaReasonForNotHaving, decisionMaker, decisionMakerName, decisionMakerPhone, decisionMakerEmail, privacyPreferences, financialMgt, repDetails } = req.body
+      const { ndiaNumber, firstName, middleName, surname, gender, dob, homePhone, mobilePhone, workPhone, profileImage, emailAddress, advocateNeeded, auditingConsent, culturalPreference, countryOfBirth, preferredLanguage, culturalActivity, interpreterRequired, indigenousStatus, currentAddress, haveNdiaPlan, ndiaApprovalDate, ndiaReasonForNotHaving, decisionMaker, decisionMakerName, decisionMakerPhone, decisionMakerEmail, privacyPreferences, financialMgt, repDetails, needsMobilityAssistance, mobilityIndependent, mobilityDescription, hearingIssues, hearingDescription, visionIssues, visionDescription, needsCommunicationAssistance, communicationPreference, otherCommunication, hadCommunicationAssessment, memoryCognition, memoryDescription, aidEquipmentUsed, needsAssistance, staffRequireTraining, showeringAssistance, showeringDetails, groomingAssistance, groomingDetails, dressingAssistance, dressingDetails, toiletingAssistance, toiletingDetails, eatingAssistance, eatingDetails, transferAssistance, transferDetails, upsettingBehavior, concerningBehavior, disruptiveBehavior, hasBehaviorSupportPlan, behaviorRiskAssessment, assistanceGettingAround, transportAssistance, assistanceToActivities, transportType, communityActivities, participantName, participantSignature, participantSignDate, staffName, staffSignature, staffSignDate, verbalConsentName, verbalConsentSignature, verbalConsentSignDate } = req.body
 
       const repDetailsDeserialized = JSON.parse(repDetails)
+      const communicationPreferenceDeserialized = JSON.parse(communicationPreference)
 
-      console.log(typeof (repDetailsDeserialized))
+      // console.log(typeof (repDetailsDeserialized))
 
       const formattedRepDetails = repDetailsDeserialized.map(item => ({ ...item }))
+
+      // const formattedCommPreference = communicationPreferenceDeserialized.map(item => ({ ...item }))
       // console.log(`Formatted REP Details: ${formattedRepDetails}`)
 
       // Handle images and save to Cloudinary
@@ -43,7 +48,7 @@ module.exports.participantControllers = {
 
       const newParticipant = new Participant({
         ndiaNumber, firstName, middleName, surname, gender, dob, homePhone, mobilePhone, workPhone, profileImage, emailAddress, advocateNeeded, auditingConsent, culturalPreference, countryOfBirth, preferredLanguage, culturalActivity, interpreterRequired, indigenousStatus, currentAddress, haveNdiaPlan, ndiaApprovalDate, ndiaReasonForNotHaving, decisionMaker, decisionMakerName, decisionMakerPhone, decisionMakerEmail, privacyPreferences, financialMgt, repDetails: formattedRepDetails,
-        profileImage: savedURI,
+        profileImage: savedURI, needsMobilityAssistance, mobilityIndependent, mobilityDescription, hearingIssues, hearingDescription, visionIssues, visionDescription, needsCommunicationAssistance, communicationPreference: communicationPreferenceDeserialized, otherCommunication, hadCommunicationAssessment, memoryCognition, memoryDescription, aidEquipmentUsed, needsAssistance, staffRequireTraining, showeringAssistance, showeringDetails, groomingAssistance, groomingDetails, dressingAssistance, dressingDetails, toiletingAssistance, toiletingDetails, eatingAssistance, eatingDetails, transferAssistance, transferDetails, upsettingBehavior, concerningBehavior, disruptiveBehavior, hasBehaviorSupportPlan, behaviorRiskAssessment, assistanceGettingAround, transportAssistance, assistanceToActivities, transportType, communityActivities, participantName, participantSignature, participantSignDate, staffName, staffSignature, staffSignDate, verbalConsentName, verbalConsentSignature, verbalConsentSignDate
       })
 
       const savedParticipant = await newParticipant.save()

@@ -4,16 +4,22 @@ const cloudinary = require('../helpers/cloudinary.helpers')
 
 module.exports.participantControllers = {
   getAll: async (req, res, next) => {
-    res.status(200).json({
-      message: 'All participants will be listed here'
-    })
+    try {
+      const response = await Participant.find()
+
+      if (!response) throw createError.NotFound('No Participant saved in the database. Add a new participant')
+
+      res.status(200).json({
+        response
+      })
+    } catch (error) {
+      console.log(error)
+      next(error)
+    }
   },
   registerParticipant: async (req, res, next) => {
     try {
       console.log('REQ>BODY:', req.body)
-
-
-
       // Destructure repDetails array 
       const { ndiaNumber, firstName, middleName, surname, gender, dob, homePhone, mobilePhone, workPhone, profileImage, emailAddress, advocateNeeded, auditingConsent, culturalPreference, countryOfBirth, preferredLanguage, culturalActivity, interpreterRequired, indigenousStatus, currentAddress, haveNdiaPlan, ndiaApprovalDate, ndiaReasonForNotHaving, decisionMaker, decisionMakerName, decisionMakerPhone, decisionMakerEmail, privacyPreferences, financialMgt, repDetails, needsMobilityAssistance, mobilityIndependent, mobilityDescription, hearingIssues, hearingDescription, visionIssues, visionDescription, needsCommunicationAssistance, communicationPreference, otherCommunication, hadCommunicationAssessment, memoryCognition, memoryDescription, aidEquipmentUsed, needsAssistance, staffRequireTraining, showeringAssistance, showeringDetails, groomingAssistance, groomingDetails, dressingAssistance, dressingDetails, toiletingAssistance, toiletingDetails, eatingAssistance, eatingDetails, transferAssistance, transferDetails, upsettingBehavior, concerningBehavior, disruptiveBehavior, hasBehaviorSupportPlan, behaviorRiskAssessment, assistanceGettingAround, transportAssistance, assistanceToActivities, transportType, communityActivities, participantName, participantSignature, participantSignDate, staffName, staffSignature, staffSignDate, verbalConsentName, verbalConsentSignature, verbalConsentSignDate } = req.body
 

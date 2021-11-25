@@ -1,6 +1,7 @@
 import { getField, updateField } from 'vuex-map-fields'
 
 export const state = () => ({
+  participants: null,
   // Participant details
   ndiaNumber: '',
   firstName: '',
@@ -259,6 +260,20 @@ export const actions = {
       return err
     }
   },
+
+  // GET all participants
+  async getParticipants ({ commit, dispatch }) {
+    try {
+      const results = await this.$axios.get('/participant')
+
+      if (results.status === 200) {
+        commit('SET_PARTICIPANTS', results.data.response)
+      }
+    } catch (err) {
+      console.log(err)
+      return err
+    }
+  },
   // Update Basic information
   async updateParticipantInfo ({ dispatch, state }, payload) {
     try {
@@ -292,6 +307,9 @@ export const actions = {
 
 export const mutations = {
   updateField,
+  SET_PARTICIPANTS (state, participants) {
+    state.participants = participants
+  },
   addRepresentative (state) {
     state.repDetails.push({
       firstName: '',

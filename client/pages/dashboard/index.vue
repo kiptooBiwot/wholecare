@@ -6,11 +6,13 @@
       <span class="h3">Welcome</span>
 
       <div class="md:grid md:grid-cols-2 lg:grid-cols-4 justify-between">
-        <tile-card />
-        <tile-card />
-        <tile-card />
-        <tile-card />
+        <div v-for="(item, index) in cardItems" :key="index">
+          <tile-card :item="item" />
+        </div>
       </div>
+      {{ cardItems[0].numberOfItems }}
+      <!-- {{ cardItems.numberOfItems[index] }}
+      {{ cardItems.numberOfItems[index] }} -->
       <div class="flex gap-4">
         <div class="">
           <manage-staff :users="users" />
@@ -28,18 +30,60 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import tileCard from '../../components/dashboard/main-dashboard/tileCard.vue'
 import ManageStaff from '../../components/staff/ManageStaff.vue'
 export default {
   components: { tileCard, ManageStaff },
   layout: 'dashboard',
-  computed: {
-    ...mapState('authentication', ['users'])
+  data () {
+    return {
+      cardItems: [
+        {
+          icon: 'Icon goes Here!',
+          numberOfItems: null,
+          colorOfIcon: 'text-green',
+          cardText: 'Participants'
+        },
+        {
+          icon: 'Icon goes Here!',
+          numberOfItems: null,
+          colorOfIcon: 'text-green',
+          cardText: 'Number of Staff'
+        },
+        {
+          icon: 'Icon goes Here!',
+          numberOfItems: null,
+          colorOfIcon: 'text-green',
+          cardText: 'Invoices'
+        }
+      ]
+    }
   },
-  async mounted () {
+  computed: {
+    ...mapState('authentication', ['users']),
+    ...mapState('participants', ['participants']),
+    ...mapState('invoice', ['invoices']),
+
+    setVal: () => {
+      this.setValues()
+    }
+  },
+  async created () {
     await this.$store.dispatch('authentication/getUsers')
     // this.getUsers
+    await this.getParticipants()
+    await this.getInvoices()
+  },
+  methods: {
+    ...mapActions('participants', ['getParticipants']),
+    ...mapActions('invoice', ['getInvoices']),
+
+    setValues () {
+      this.cardItems[0].numberOfItems = this.particpants.length
+      this.cardItems[1].numberOfItems = this.users.length
+      this.cardItems[2].numberOfItems = this.invoices.length
+    }
   }
 }
 </script>

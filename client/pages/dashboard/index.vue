@@ -10,9 +10,6 @@
           <tile-card :item="item" />
         </div>
       </div>
-      {{ cardItems[0].numberOfItems }}
-      <!-- {{ cardItems.numberOfItems[index] }}
-      {{ cardItems.numberOfItems[index] }} -->
       <div class="flex gap-4">
         <div class="">
           <manage-staff :users="users" />
@@ -40,22 +37,28 @@ export default {
     return {
       cardItems: [
         {
-          icon: 'Icon goes Here!',
+          icon:
+            'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
           numberOfItems: null,
           colorOfIcon: 'text-green',
-          cardText: 'Participants'
+          cardText: 'Participants',
+          urlLink: '/dashboard/participant/list-participants'
         },
         {
-          icon: 'Icon goes Here!',
+          icon:
+            'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z',
           numberOfItems: null,
-          colorOfIcon: 'text-green',
-          cardText: 'Number of Staff'
+          colorOfIcon: 'text-orange',
+          cardText: 'Number of Staff',
+          urlLink: '/dashboard/staff'
         },
         {
-          icon: 'Icon goes Here!',
+          icon:
+            'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
           numberOfItems: null,
-          colorOfIcon: 'text-green',
-          cardText: 'Invoices'
+          colorOfIcon: 'text-red',
+          cardText: 'Invoices',
+          urlLink: '/dashboard/invoice'
         }
       ]
     }
@@ -63,13 +66,37 @@ export default {
   computed: {
     ...mapState('authentication', ['users']),
     ...mapState('participants', ['participants']),
-    ...mapState('invoice', ['invoices']),
-
-    setVal: () => {
-      this.setValues()
+    ...mapState('invoice', ['invoices'])
+  },
+  watch: {
+    users: {
+      handler () {
+        this.cardItems[1].numberOfItems = this.users.length
+      },
+      immediate: true
+    },
+    participants: {
+      handler () {
+        if (!this.participants) {
+          this.getParticipants()
+        } else {
+          this.cardItems[0].numberOfItems = this.participants.length
+        }
+      },
+      immediate: true
+    },
+    invoices: {
+      handler () {
+        if (!this.invoices) {
+          this.getInvoices()
+        } else {
+          this.cardItems[2].numberOfItems = this.invoices.length
+        }
+      },
+      immediate: true
     }
   },
-  async created () {
+  async mounted () {
     await this.$store.dispatch('authentication/getUsers')
     // this.getUsers
     await this.getParticipants()
@@ -77,13 +104,7 @@ export default {
   },
   methods: {
     ...mapActions('participants', ['getParticipants']),
-    ...mapActions('invoice', ['getInvoices']),
-
-    setValues () {
-      this.cardItems[0].numberOfItems = this.particpants.length
-      this.cardItems[1].numberOfItems = this.users.length
-      this.cardItems[2].numberOfItems = this.invoices.length
-    }
+    ...mapActions('invoice', ['getInvoices'])
   }
 }
 </script>

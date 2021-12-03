@@ -1,13 +1,14 @@
 <template>
   <div>
-    <nuxt-link to="/dashboard/participant/list-participants">
+    <nuxt-link :to="item.urlLink">
       <div
         class="bg-white rounded-md border border-gray-100 md:gap-4 sm:w-full lg:w-60 h-32 shadow-lg p-4 hover:shadow-2xl  hover:scale-110 transform-gpu transition duration-500 ease-out"
       >
         <div class="flex justify-between mt-4">
           <div>
             <svg
-              class="w-16 h-16 text-blue-400"
+              class="w-16 h-16 text-purple-400"
+              :class="item.colorOfIcon"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -17,19 +18,18 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                :d="item.icon"
               />
             </svg>
           </div>
           <div class="flex-col justify-between">
             <div class="text-2xl text-green-600 font-bold">
-              120
+              {{ item.numberOfItems }}
             </div>
             <div class="text-gray-600">
-              Participants
+              {{ item.cardText }}
             </div>
           </div>
-          {{ items }}
         </div>
       </div>
     </nuxt-link>
@@ -39,9 +39,9 @@
 <script>
 export default {
   props: {
-    items: {
-      type: Array,
-      default: () => {}
+    item: {
+      type: Object,
+      required: true
     }
   }
 }

@@ -6,7 +6,11 @@
       </h3>
       <!-- <div class="grid md:grid-cols-4 gap-4"> -->
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <staff-card v-for="(staff, index) in users" :key="index" :staff="staff" />
+        <staff-card
+          v-for="(staff, index) in users"
+          :key="index"
+          :staff="staff"
+        />
       </div>
     </div>
   </div>
@@ -21,21 +25,15 @@ export default {
     StaffCard
   },
   layout: 'dashboard',
-  data: () => ({
-  }),
+  data: () => ({}),
   computed: {
-    ...mapState('authentication', (['users']))
-    // ...mapActions('authentication', (['getUsers']))
-    // this.$store.dispatch('authentication/getUsers')
+    ...mapState('authentication', ['users'])
   },
   async mounted () {
     await this.$store.dispatch('authentication/getUsers')
-    // this.getUsers
   },
   methods: {}
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

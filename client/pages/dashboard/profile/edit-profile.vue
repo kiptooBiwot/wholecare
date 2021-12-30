@@ -8,10 +8,8 @@
 
 <script>
 export default {
-  layout: 'dashboard'
+  layout: 'profile'
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

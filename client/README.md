@@ -19,6 +19,25 @@ $ npm run generate
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
+## Designs
+<img src="design/Sign Up.png">
+<img src="design/Sign In Mobile-1.png">
+<img src="design/Sign In Mobile.png">
+<img src="design/Recover Password.png">
+<img src="design/Recover Password-1.png">
+<img src="design/Recover Password Mobile-1.png">
+<img src="design/Log In.png">
+<img src="design/Lock Screen.png">
+<img src="design/Lock Screen Mobile.png">
+<img src="design/Lock Screen Mobile-1.png">
+<img src="design/Dashboard.png">
+<img src="design/Dashboard-1.png">
+<img src="design/Dashboard-2.png">
+<img src="design/Dashboard-3.png">
+<img src="design/Dashboard-4.png">
+<img src="design/Dashboard-5.png">
+<img src="design/Dashboard Admin.png">
+
 ## Special Directories
 
 You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
